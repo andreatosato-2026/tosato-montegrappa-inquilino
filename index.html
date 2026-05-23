@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa indipendente in locazione — Via Monte Grappa 5, Verona</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nero: #1a1a1a;
+      --bianco: #fafaf8;
+      --grigio: #6b6b6b;
+      --grigio-chiaro: #e8e4df;
+      --legno: #8c6239;
+      --legno-chiaro: #d4b896;
+      --verde-ok: #2d6a4f;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--bianco);
+      color: var(--nero);
+      line-height: 1.65;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.52), rgba(0,0,0,0.52)),
+                  url('foto/foto-facciata.jpg') center/cover no-repeat;
+      color: var(--bianco);
+      padding: 80px 24px 64px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--legno-chiaro);
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 44px);
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--legno-chiaro);
+    }
+    .hero-sub {
+      font-family: 'Arial', sans-serif;
+      font-size: 15px;
+      color: #aaa;
+      margin-bottom: 40px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 24px;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--legno-chiaro);
+      display: block;
+    }
+    .stat-lbl {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      margin-top: 4px;
+    }
+
+    /* SCADENZA BANNER */
+    .scadenza-bar {
+      background: var(--legno);
+      color: white;
+      text-align: center;
+      padding: 14px 24px;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .scadenza-bar strong { font-weight: bold; }
+
+    /* CONTENUTO */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--grigio-chiaro);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--legno);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: normal;
+      margin-bottom: 24px;
+      line-height: 1.25;
+    }
+
+    p { margin-bottom: 16px; color: #333; }
+    p:last-child { margin-bottom: 0; }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 6px;
+      margin-top: 32px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: #eee;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.94);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 28px;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      line-height: 1;
+      background: none;
+      border: none;
+      opacity: 0.7;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-prev, .lightbox-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 16px;
+      opacity: 0.6;
+    }
+    .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
+    .lightbox-prev { left: 12px; }
+    .lightbox-next { right: 12px; }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      padding: 5px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      white-space: nowrap;
+      pointer-events: none;
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    /* PLANIMETRIA */
+    .planimetria-wrap {
+      margin-top: 32px;
+      background: #f9f7f4;
+      border-radius: 8px;
+      padding: 32px 24px 20px;
+      text-align: center;
+    }
+    .planimetria-wrap svg { max-width: 720px; width: 100%; height: auto; }
+    .planimetria-nota { font-size: 12px; color: #aaa; margin-top: 12px; font-style: italic; }
+
+    /* MAPPA */
+    .mappa-wrap {
+      margin-top: 32px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--grigio-chiaro);
+    }
+    .mappa-wrap iframe { display: block; width: 100%; border: 0; height: 420px; }
+
+    /* LAYOUT IMMOBILE */
+    .livelli {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--grigio-chiaro);
+      margin-top: 32px;
+      border: 1px solid var(--grigio-chiaro);
+    }
+    .livello {
+      background: var(--bianco);
+      padding: 24px 20px;
+    }
+    .livello-num {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--legno);
+      margin-bottom: 8px;
+    }
+    .livello h3 {
+      font-size: 16px;
+      font-weight: normal;
+      margin-bottom: 6px;
+    }
+    .livello p {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: var(--grigio);
+      margin: 0;
+    }
+
+    /* CONDIZIONI ECONOMICHE */
+    .canoni {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--grigio-chiaro);
+      border: 1px solid var(--grigio-chiaro);
+      margin-top: 32px;
+    }
+    .canone-box {
+      background: var(--bianco);
+      padding: 28px 24px;
+    }
+    .canone-box.primo { background: #f5f0ea; color: var(--nero); }
+    .canone-periodo {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--legno);
+      margin-bottom: 10px;
+    }
+    .canone-box:not(.primo) .canone-periodo { color: var(--legno); }
+    .canone-importo {
+      font-size: 36px;
+      font-weight: bold;
+      letter-spacing: -1px;
+    }
+    .canone-box.primo .canone-importo { color: var(--nero); }
+    .canone-nota {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: #999;
+      margin-top: 6px;
+    }
+    .canone-box.primo .canone-nota { color: #888; }
+
+    .oneri-lista {
+      margin-top: 28px;
+      border-top: 1px solid var(--grigio-chiaro);
+    }
+    .onere-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--grigio-chiaro);
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      gap: 16px;
+    }
+    .onere-voce { color: #444; }
+    .onere-val { color: var(--nero); font-weight: bold; white-space: nowrap; }
+    .onere-val.verde { color: var(--verde-ok); }
+    .onere-val.conduttore { color: var(--legno); }
+
+    /* PROCESSO */
+    .steps {
+      margin-top: 32px;
+      counter-reset: step;
+    }
+    .step {
+      display: flex;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--grigio-chiaro);
+      align-items: flex-start;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      counter-increment: step;
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--legno);
+      min-width: 36px;
+      padding-top: 2px;
+    }
+    .step-content h3 {
+      font-size: 16px;
+      font-weight: normal;
+      margin-bottom: 6px;
+    }
+    .step-content p {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: var(--grigio);
+      margin: 0;
+    }
+    .step-data {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      color: var(--legno);
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    /* RICHIESTA DOCUMENTI */
+    .docs-lista {
+      margin-top: 24px;
+    }
+    .doc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--grigio-chiaro);
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+    }
+    .doc-item:last-child { border-bottom: none; }
+    .doc-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--grigio-chiaro);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .doc-testo strong { display: block; margin-bottom: 2px; }
+    .doc-testo span { color: var(--grigio); font-size: 12px; }
+
+    /* CTA */
+    .cta-section {
+      background: var(--nero);
+      color: var(--bianco);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      color: var(--bianco);
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      color: #aaa;
+      max-width: 500px;
+      margin: 0 auto 36px;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+    }
+    .btn-candidati {
+      display: inline-block;
+      background: var(--legno);
+      color: white;
+      text-decoration: none;
+      padding: 18px 48px;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .btn-candidati:hover { background: #a07040; }
+    .cta-nota {
+      margin-top: 20px;
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* IMPEGNI CONTRATTUALI */
+    .contratto-info {
+      background: #f4f0ea;
+      border-left: 3px solid var(--legno);
+      padding: 24px 28px;
+      margin-top: 32px;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: #444;
+    }
+    .contratto-info p { margin-bottom: 10px; color: #444; font-family: 'Arial', sans-serif; font-size: 13px; }
+    .contratto-info p:last-child { margin-bottom: 0; }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      color: #555;
+      text-align: center;
+      padding: 28px 24px;
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .hero-stats { gap: 24px; }
+      .canoni { grid-template-columns: 1fr; }
+      .livelli { grid-template-columns: 1fr; }
+      .step { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-tag">Verona · Zona Borgo Trento · Locazione</div>
+    <h1>Una casa<br><em>indipendente</em><br>nel cuore di Verona</h1>
+    <p class="hero-sub">Via Monte Grappa 5 · Casa terra-cielo su tre livelli · Ingresso autonomo</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-val">53</span>
+        <span class="stat-lbl">mq totali</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">3</span>
+        <span class="stat-lbl">livelli</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">2</span>
+        <span class="stat-lbl">posti letto</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">4+4</span>
+        <span class="stat-lbl">anni di contratto</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">€ 1.000</span>
+        <span class="stat-lbl">al mese (primi 4 anni)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCADENZA -->
+<div class="scadenza-bar">
+  La proprietà comunicherà la propria decisione entro il <strong>20 giugno 2026</strong>.
+  Candidature aperte. Decorrenza contratto: 1 luglio 2026.
+</div>
+
+<!-- GALLERY -->
+<section>
+  <div class="container">
+    <div class="section-label">Galleria fotografica</div>
+    <h2>Come si presenta oggi</h2>
+    <p>L'immobile è attualmente arredato. Le foto mostrano l'immobile nelle condizioni correnti.</p>
+
+    <div class="gallery-grid" id="gallery">
+      <div class="gallery-item" onclick="openLightbox(0)"><img src="foto/foto-29.jpg" alt="Soggiorno" loading="eager"></div>
+      <div class="gallery-item" onclick="openLightbox(1)"><img src="foto/foto-14.jpg" alt="Soggiorno — divano e finestra" loading="eager"></div>
+      <div class="gallery-item" onclick="openLightbox(2)"><img src="foto/foto-15.jpg" alt="Soggiorno — luce naturale" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(3)"><img src="foto/foto-30.jpg" alt="Zona pranzo" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(4)"><img src="foto/foto-27.jpg" alt="Cucina attrezzata" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(5)"><img src="foto/foto-05.jpg" alt="Camera matrimoniale" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(6)"><img src="foto/foto-02.jpg" alt="Camera — vista d'insieme" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(7)"><img src="foto/foto-25.jpg" alt="Camera matrimoniale — panoramica" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(8)"><img src="foto/foto-09.jpg" alt="Camera — dettaglio letto" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(9)"><img src="foto/foto-04.jpg" alt="Camera — finestra e tenda" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(10)"><img src="foto/foto-10.jpg" alt="Camera — accesso dal piano primo" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(11)"><img src="foto/foto-18.jpg" alt="Bagno con doccia" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(12)"><img src="foto/foto-22.jpg" alt="Bagno — doccia in vetro" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(13)"><img src="foto/foto-12.jpg" alt="Scala in cotto" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(14)"><img src="foto/foto-07.jpg" alt="Scala interna — TV a parete" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(15)"><img src="foto/foto-06.jpg" alt="Ringhiera in acciaio e vetro" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(16)"><img src="foto/foto-01.jpg" alt="Piano primo — divisorio in vetro" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(17)"><img src="foto/foto-11.jpg" alt="Guardaroba a nicchia" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(18)"><img src="foto/foto-17.jpg" alt="Nicchia con appendiabiti" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(19)"><img src="foto/foto-26.jpg" alt="Dettaglio interno" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+  <button class="lightbox-prev" onclick="changeLightbox(-1)">&#8592;</button>
+  <img src="" id="lightbox-img" alt="">
+  <button class="lightbox-next" onclick="changeLightbox(1)">&#8594;</button>
+  <span class="lightbox-caption" id="lightbox-caption"></span>
+</div>
+
+<!-- PLANIMETRIA -->
+<section>
+  <div class="container">
+    <div class="section-label">Planimetria</div>
+    <h2>Distribuzione degli spazi</h2>
+    <p>Casa terra-cielo su tre livelli collegati da scala interna. Superficie complessiva 53 mq.</p>
+    <div class="planimetria-wrap">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:780px; margin:0 auto;">
+        <div style="text-align:center;">
+          <img src="foto/planimetria-PT.png" alt="Planimetria Piano Terra"
+               style="width:100%; height:auto; border:1px solid #e8e0d6; border-radius:4px; background:#fff;">
+          <p style="margin-top:10px; font-family:Arial,sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--legno);">Piano Terra</p>
+          <p style="font-family:Arial,sans-serif; font-size:12px; color:#666; margin-top:2px;">Soggiorno · Cucina</p>
+        </div>
+        <div style="text-align:center;">
+          <img src="foto/planimetria-P1.png" alt="Planimetria Piano Primo"
+               style="width:100%; height:auto; border:1px solid #e8e0d6; border-radius:4px; background:#fff;">
+          <p style="margin-top:10px; font-family:Arial,sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--legno);">Piano Primo</p>
+          <p style="font-family:Arial,sans-serif; font-size:12px; color:#666; margin-top:2px;">Bagno · Disimpegno</p>
+        </div>
+        <div style="text-align:center;">
+          <img src="foto/planimetria-P2.png" alt="Planimetria Piano Secondo"
+               style="width:100%; height:auto; border:1px solid #e8e0d6; border-radius:4px; background:#fff;">
+          <p style="margin-top:10px; font-family:Arial,sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--legno);">Piano Secondo</p>
+          <p style="font-family:Arial,sans-serif; font-size:12px; color:#666; margin-top:2px;">Camera matrimoniale</p>
+        </div>
+      </div>
+      <p class="planimetria-nota">Planimetrie catastali. Superficie complessiva 53 mq.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DESCRIZIONE IMMOBILE -->
+<section>
+  <div class="container">
+    <div class="section-label">L'immobile</div>
+    <h2>Una casa, non un appartamento</h2>
+    <p>
+      Casa terra-cielo con ingresso indipendente, sviluppata su tre livelli collegati da scala
+      in cotto con ringhiera in legno massello. Soffitti in legno al piano terra, struttura
+      autentica che conserva il carattere del tessuto urbano storico veronese.
+    </p>
+    <p>
+      Nessuna parte comune, nessun condominio, nessun vicino di pianerottolo.
+      Ingresso diretto sulla via, piena autonomia.
+    </p>
+    <p>
+      La casa dista <strong>450 metri dall'Ospedale Civile Maggiore Borgo Trento</strong>.
+      La zona Borgo Trento, servita da mezzi pubblici, commerci e servizi, è una delle aree residenziali
+      più stabili e richieste di Verona.
+    </p>
+    <p>Supermercati nelle immediate vicinanze:</p>
+    <ul style="margin: 8px 0 16px 20px; color: #333; line-height: 1.8;">
+      <li><strong>Aldi</strong> — Via Mameli 75, Borgo Trento — circa 620 mt</li>
+      <li><strong>A&amp;O</strong> — Via Niccolò Tommaseo — circa 560 mt</li>
+      <li><strong>Famila Superstore</strong> — Via Ca' di Cozzi 43 — circa 800 mt</li>
+    </ul>
+
+    <div class="contratto-info" style="margin-top:32px; margin-bottom:0;">
+      <p><strong>Immobile consegnato interamente arredato.</strong> La dotazione attuale comprende: cucina attrezzata, frigorifero, lavatrice, letto matrimoniale con rete e materasso, asse da stiro.</p>
+    </div>
+
+    <div class="livelli" style="margin-top:24px;">
+      <div class="livello">
+        <div class="livello-num">Piano terra</div>
+        <h3>Soggiorno e cucina</h3>
+        <p>Soggiorno con zona living e angolo cottura attrezzato. Soffitto in legno, luce naturale su via.</p>
+      </div>
+      <div class="livello">
+        <div class="livello-num">Piano primo</div>
+        <h3>Disimpegno e bagno</h3>
+        <p>Bagno con doccia, riscaldamento autonomo. Distribuzione comoda tra i livelli.</p>
+      </div>
+      <div class="livello">
+        <div class="livello-num">Piano secondo</div>
+        <h3>Camera matrimoniale</h3>
+        <p>Camera con nicchia guardaroba integrata, luce naturale, soffitto in legno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSIZIONE -->
+<section>
+  <div class="container">
+    <div class="section-label">Posizione</div>
+    <h2>Via Monte Grappa 5, Verona</h2>
+    <p>Borgo Trento, una delle zone residenziali più ricercate di Verona: a pochi passi dall'Ospedale Civile Maggiore, dai giardini di Valdonega e dai principali servizi della città.</p>
+    <div class="mappa-wrap">
+      <iframe
+        src="https://maps.google.com/maps?q=Via+Monte+Grappa+5,+37121+Verona+VR,+Italia&z=17&output=embed"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Via Monte Grappa 5 — Verona">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CONDIZIONI ECONOMICHE -->
+<section>
+  <div class="container">
+    <div class="section-label">Condizioni economiche</div>
+    <h2>Canone bloccato per i primi 4 anni</h2>
+    <p>
+      Il contratto prevede un canone bloccato per il primo quadriennio, con importo per il secondo quadriennio
+      preventivamente definito. Le condizioni sono fisse e documentate: nessuna sorpresa.
+    </p>
+
+    <div class="canoni">
+      <div class="canone-box primo">
+        <div class="canone-periodo">Dal 1° al 4° anno</div>
+        <div class="canone-importo">€ 1.000</div>
+        <div class="canone-nota">al mese · canone bloccato</div>
+      </div>
+      <div class="canone-box">
+        <div class="canone-periodo">Dal 5° anno a seguire</div>
+        <div class="canone-importo">€ 1.200</div>
+        <div class="canone-nota">al mese · dal quinto anno</div>
+      </div>
+    </div>
+
+    <div class="oneri-lista">
+      <div class="onere-row">
+        <span class="onere-voce">Spese di agenzia</span>
+        <span class="onere-val verde">Nessuna</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Spese condominiali</span>
+        <span class="onere-val verde">Nessuna</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Assicurazione immobile</span>
+        <span class="onere-val conduttore">€ 80 / anno &middot; conduttore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Manutenzione ordinaria caldaia (con tecnico di fiducia coordinato dalla proprietà)</span>
+        <span class="onere-val conduttore">€ 120 / anno &middot; conduttore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Piccole manutenzioni (rubinetti, doccini, elettrodomestici)</span>
+        <span class="onere-val conduttore">Conduttore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Spese straordinarie (tetto, struttura, impianti)</span>
+        <span class="onere-val verde">Locatore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Registrazione contratto e rinnovi</span>
+        <span class="onere-val verde">Locatore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Utenze (luce, gas, acqua, rifiuti)</span>
+        <span class="onere-val conduttore">Conduttore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Fumo</span>
+        <span class="onere-val" style="color:var(--nero);">Vietato fumare nell'immobile</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Deposito cauzionale</span>
+        <span class="onere-val conduttore">3 mensilità (€ 3.000) da versare alla firma del contratto</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Decorrenza contratto</span>
+        <span class="onere-val" style="color:var(--nero);">1 luglio 2026</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Parcheggio auto</span>
+        <span class="onere-val" style="color:var(--grigio); font-weight:normal; font-size:11px; line-height:1.5;">La zona è soggetta a ZTL/parcheggio regolamentato.<br>Il Comune di Verona rilascia pass annuali per residenti<br>con accesso al parcheggio convenzionato.</span>
+      </div>
+    </div>
+
+    <div class="contratto-info">
+      <p>Contratto uso abitativo 4+4 anni ai sensi della L. 431/1998. Durata minima garantita di 4 anni con diritto al rinnovo per ulteriori 4. Il contratto sarà registrato regolarmente.</p>
+      <p>In fase di visita saranno illustrati tutti i dettagli contrattuali e le clausole accessorie. Non verrà richiesto alcun impegno prima della visita.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTI RICHIESTI -->
+<section>
+  <div class="container">
+    <div class="section-label">Documentazione richiesta</div>
+    <h2>Cosa serve per candidarsi</h2>
+    <p>
+      Per consentire una valutazione seria della candidatura, chiediamo di allegare
+      i documenti indicati al momento della compilazione del form.
+      File accettati: PDF o immagine JPEG/PNG. Non apriremo file di tipo diverso.
+    </p>
+    <p><u>Senza questi documenti non sarà valutata la candidatura.</u></p>
+
+    <div class="docs-lista">
+      <div class="doc-item">
+        <div class="doc-icon">01</div>
+        <div class="doc-testo">
+          <strong>Dati anagrafici e lavorativi</strong>
+          <span>Compilati direttamente nel form: nome, attività, datore di lavoro, tipo e durata del contratto.</span>
+        </div>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">02</div>
+        <div class="doc-testo">
+          <strong>Ultime 3 buste paga</strong>
+          <span>Formato PDF o foto JPEG leggibile. I tre mesi più recenti disponibili.</span>
+        </div>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">03</div>
+        <div class="doc-testo">
+          <strong>Copia contratto di lavoro</strong>
+          <span>O documentazione equivalente per lavoratori autonomi / liberi professionisti.</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:24px; font-family:Arial,sans-serif; font-size:13px; color:#888;">
+      I dati raccolti sono trattati ai soli fini della selezione del conduttore e non
+      vengono condivisi con terze parti. Tutti i file vengono analizzati in ambiente
+      sicuro e rimossi entro 60 giorni dalla chiusura della selezione.
+    </p>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section>
+  <div class="container">
+    <div class="section-label">Come funziona</div>
+    <h2>Il processo di selezione</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Invio candidatura</h3>
+          <p>Compili il form qui sotto con i dati richiesti e allega i documenti. Riceverai una conferma via email entro pochi minuti.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Pre-analisi documentale</h3>
+          <p>Verifica dei documenti inviati entro 5 giorni lavorativi. In caso di documentazione incompleta, sarà richiesta integrazione via email.</p>
+          <div class="step-data">Entro 5 giorni lavorativi dall'invio</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Ricontatto candidati selezionati</h3>
+          <p>Chi supera la pre-analisi sarà ricontattato per essere invitato alla visita. Le candidature incomplete non riceveranno risposta in questa fase.</p>
+          <div class="step-data">Intorno al 10 giugno 2026</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Visita all'immobile</h3>
+          <p>Incontro presso l'immobile. In questa sede saranno illustrati i dettagli contrattuali, le condizioni del deposito cauzionale e le modalità di firma.</p>
+          <div class="step-data">Indicativamente tra il 10 e il 20 giugno 2026</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h3>Decisione della proprietà</h3>
+          <p>Tutti i candidati incontrati riceveranno comunicazione dell'esito, positivo o negativo. Il contratto decorrerà dal <strong>1 luglio 2026</strong>.</p>
+          <div class="step-data">Entro il 20 giugno 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFORMATIVA PRIVACY -->
+<section id="privacy" style="background:#f4f0ea; border-bottom:none;">
+  <div class="container">
+    <div class="section-label">Informativa privacy</div>
+    <h2 style="font-size:20px;">Trattamento dei dati personali</h2>
+    <p style="font-family:Arial,sans-serif; font-size:13px; color:#444;">
+      Ai sensi dell'art. 13 del Regolamento UE 2016/679 (GDPR), La informiamo che i dati personali
+      forniti tramite il presente form — inclusi i documenti di natura reddituale e lavorativa
+      caricati volontariamente — saranno trattati esclusivamente per finalità di selezione del
+      conduttore per l'immobile di Via Monte Grappa 5, Verona.
+    </p>
+
+    <details style="margin-top:16px;">
+      <summary style="font-family:Arial,sans-serif; font-size:13px; font-weight:bold; cursor:pointer; color:var(--legno);">
+        Leggi l'informativa completa
+      </summary>
+      <div style="margin-top:16px; font-family:Arial,sans-serif; font-size:13px; color:#444; line-height:1.7;">
+        <p><strong>Titolare del trattamento:</strong> Andrea Tosato, c/o TOSATO Intermediazioni S.r.l.,
+        Via Belle Arti 9, 37053 Cerea (VR) — andrea.tosato@tosatointermediazioni.com</p>
+
+        <p><strong>Finalità e base giuridica:</strong> I dati sono raccolti e trattati ai soli fini
+        della selezione del conduttore (art. 6, par. 1, lett. b GDPR — esecuzione di misure
+        precontrattuali su richiesta dell'interessato). Il caricamento dei documenti avviene
+        su base volontaria e con il consenso esplicito dell'interessato (art. 6, par. 1, lett. a GDPR).</p>
+
+        <p><strong>Dati trattati:</strong> dati anagrafici, contatti, dati lavorativi e reddituali,
+        documenti caricati (buste paga, contratto di lavoro).</p>
+
+        <p><strong>Modalità di trattamento:</strong> I dati sono trattati in forma elettronica,
+        con misure di sicurezza adeguate. I documenti caricati sono conservati su Google Drive
+        con accesso limitato al titolare. Non sono condivisi con terze parti né trasferiti
+        al di fuori dell'Unione Europea.</p>
+
+        <p><strong>Conservazione:</strong> I dati e i documenti saranno eliminati entro
+        60 giorni dalla chiusura della procedura di selezione (20 agosto 2026).</p>
+
+        <p><strong>Diritti dell'interessato:</strong> Lei ha il diritto di accedere ai propri dati,
+        richiederne la rettifica o la cancellazione, opporsi al trattamento, richiedere la
+        limitazione del trattamento e la portabilità dei dati. Per esercitare tali diritti o
+        per revocare il consenso, scriva a: andrea.tosato@tosatointermediazioni.com</p>
+
+        <p><strong>Reclami:</strong> Ha il diritto di proporre reclamo al Garante per la
+        protezione dei dati personali (www.garanteprivacy.it).</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Invia la tua candidatura</h2>
+    <p>Il form richiede circa 5 minuti.<br>Tieni pronti i file delle buste paga e del contratto di lavoro prima di iniziare.</p>
+
+    <div style="max-width:520px; margin:0 auto 28px; text-align:left;">
+      <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer; font-family:Arial,sans-serif; font-size:13px; color:#ccc; line-height:1.5;">
+        <input type="checkbox" id="privacy-check" style="margin-top:3px; flex-shrink:0; width:16px; height:16px; cursor:pointer; accent-color:var(--legno);">
+        <span>
+          Ho letto e accetto l'<a href="#privacy" style="color:var(--legno-chiaro);">informativa sul trattamento dei dati personali</a>
+          e acconsento al caricamento e all'analisi dei documenti forniti ai soli fini
+          della selezione del conduttore.
+        </span>
+      </label>
+    </div>
+
+    <a href="INSERIRE_URL_GOOGLE_FORM" class="btn-candidati" id="btn-form"
+       target="_blank" rel="noopener"
+       style="opacity:0.35; pointer-events:none; cursor:default;"
+       aria-disabled="true">Candidati ora</a>
+
+    <p class="cta-nota">
+      Dopo l'invio riceverai una conferma automatica e una copia dell'informativa privacy via email.<br>
+      Per informazioni: <a href="mailto:andrea.tosato@tosatointermediazioni.com" style="color:inherit">andrea.tosato@tosatointermediazioni.com</a> · <a href="tel:+393395980786" style="color:inherit">339 598 0786</a>
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Via Monte Grappa 5, Verona &middot; Zona Borgo Trento
+  &nbsp;&middot;&nbsp;
+  Locazione a cura di TOSATO Intermediazioni S.r.l.
+  &nbsp;&middot;&nbsp;
+  Selezione aperta fino al 20 giugno 2026
+</footer>
+
+<!-- LIGHTBOX SCRIPT -->
+<script>
+  const galleryData = [
+    { src: 'foto/foto-29.jpg',  cap: 'Soggiorno' },
+    { src: 'foto/foto-14.jpg',  cap: 'Soggiorno — divano e finestra' },
+    { src: 'foto/foto-15.jpg',  cap: 'Soggiorno — luce naturale' },
+    { src: 'foto/foto-30.jpg',  cap: 'Zona pranzo' },
+    { src: 'foto/foto-27.jpg',  cap: 'Cucina attrezzata' },
+    { src: 'foto/foto-05.jpg',  cap: 'Camera matrimoniale' },
+    { src: 'foto/foto-02.jpg',  cap: 'Camera — vista d\'insieme' },
+    { src: 'foto/foto-25.jpg',  cap: 'Camera matrimoniale — panoramica' },
+    { src: 'foto/foto-09.jpg',  cap: 'Camera — dettaglio letto' },
+    { src: 'foto/foto-04.jpg',  cap: 'Camera — finestra e tenda' },
+    { src: 'foto/foto-10.jpg',  cap: 'Camera — accesso dal piano primo' },
+    { src: 'foto/foto-18.jpg',  cap: 'Bagno con doccia' },
+    { src: 'foto/foto-22.jpg',  cap: 'Bagno — doccia in vetro' },
+    { src: 'foto/foto-12.jpg',  cap: 'Scala in cotto' },
+    { src: 'foto/foto-07.jpg',  cap: 'Scala interna — TV a parete' },
+    { src: 'foto/foto-06.jpg',  cap: 'Ringhiera in acciaio e vetro' },
+    { src: 'foto/foto-01.jpg',  cap: 'Piano primo — divisorio in vetro' },
+    { src: 'foto/foto-11.jpg',  cap: 'Guardaroba a nicchia' },
+    { src: 'foto/foto-17.jpg',  cap: 'Nicchia con appendiabiti' },
+    { src: 'foto/foto-26.jpg',  cap: 'Dettaglio interno' }
+  ];
+  let currentIdx = 0;
+
+  function updateLightbox() {
+    const d = galleryData[currentIdx];
+    document.getElementById('lightbox-img').src = d.src;
+    document.getElementById('lightbox-caption').textContent = (currentIdx + 1) + ' / ' + galleryData.length + '  ·  ' + d.cap;
+  }
+
+  function openLightbox(idx) {
+    currentIdx = idx;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function changeLightbox(dir) {
+    currentIdx = (currentIdx + dir + galleryData.length) % galleryData.length;
+    updateLightbox();
+  }
+
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
+  // Privacy checkbox → abilita/disabilita bottone
+  var privacyCheck = document.getElementById('privacy-check');
+  var btnForm = document.getElementById('btn-form');
+  privacyCheck.addEventListener('change', function() {
+    if (this.checked) {
+      btnForm.style.opacity = '1';
+      btnForm.style.pointerEvents = 'auto';
+      btnForm.style.cursor = 'pointer';
+      btnForm.removeAttribute('aria-disabled');
+    } else {
+      btnForm.style.opacity = '0.35';
+      btnForm.style.pointerEvents = 'none';
+      btnForm.style.cursor = 'default';
+      btnForm.setAttribute('aria-disabled', 'true');
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeLightbox(-1);
+    if (e.key === 'ArrowRight') changeLightbox(1);
+  });
+</script>
+
+</body>
+</html>
