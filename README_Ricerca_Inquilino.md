@@ -5,6 +5,10 @@
 > Scadenza decisione: **20 giugno 2026**
 >
 > **Comando rapido:** `apri link salita monte grappa` / `riapri link salita monte grappa` → leggere questo README e aprire `index.html` nel browser
+>
+> **Log sessioni di lavoro:** [`LOG_sessioni.md`](LOG_sessioni.md) — cronologia delle sessioni Claude, stato avanzamento, prossimi passi. **Aggiornare dopo ogni sessione.**
+>
+> **Guida replicabile:** [`README_creazione_landingpage_sistema.md`](README_creazione_landingpage_sistema.md) — processo completo (Fase 0–8) per replicare questo sistema su un altro immobile: raccolta info, archiviazione, landing page, GitHub Pages, Google Form, Sheet, Apps Script, test, gestione candidature.
 
 ---
 
@@ -12,17 +16,19 @@
 
 ```
 LINK E RICERCA INQUILINO/
-├── README_Ricerca_Inquilino.md     ← questo file
-├── index.html                      ← landing page (GitHub Pages)
-├── foto/                           ← 31 foto appartamento (foto-01.jpg … foto-31.jpg)
+├── README_Ricerca_Inquilino.md        ← questo file
+├── LOG_sessioni.md                    ← cronologia sessioni Claude
+├── index.html                         ← landing page (GitHub Pages)
+├── modello_invito_candidatura.md      ← template email invito candidatura da portale
+├── foto/                              ← foto appartamento
 ├── apps-script/
-│   └── email_conferma.gs           ← script Google Apps Script per email automatica
+│   └── email_conferma.gs              ← script Google Apps Script per email automatica
 ├── google-sheet/
-│   └── struttura_sheet.md          ← schema colonne Google Sheet candidature
+│   └── struttura_sheet.md             ← schema colonne Google Sheet candidature
 └── python/
-    ├── estrai_buste_paga.py        ← script AI estrazione dati da buste paga
-    ├── requirements.txt            ← dipendenze Python
-    └── SETUP.md                    ← istruzioni configurazione
+    ├── estrai_buste_paga.py           ← script AI estrazione dati da buste paga
+    ├── requirements.txt               ← dipendenze Python
+    └── SETUP.md                       ← istruzioni configurazione
 ```
 
 ---
@@ -34,9 +40,10 @@ LINK E RICERCA INQUILINO/
 | 1 | Landing page (index.html) | ✅ Pubblicato | https://andreatosato-2026.github.io/tosato-montegrappa-inquilino/ |
 | 2 | Google Form candidature | ✅ Configurato | Form ID: 1lBzs3vp5_jBDImh_CPlcpUNhdgP852ZIIFEjZOnI8YU |
 | 3 | Google Sheet "Candidature" | ✅ Collegato | Sheet ID: 1sWP4mZ9VBMY6ucbmrUl5kPMuc5p8xrOTIPMrOp-2qyM |
-| 4 | Email conferma automatica | ✅ Creato | Installare script apps-script/ |
+| 4 | Email conferma automatica | ✅ Attivo | Script installato + trigger onFormSubmit configurato |
 | 5 | Script AI estrazione buste paga | ✅ Creato | python/ — vedi SETUP.md |
 | 6 | Template email risposta (3 tipi) | ✅ Documentato | Vedi sezione sotto |
+| 7 | Procedura CHECK MONTE GRAPPA | ✅ Documentato | Vedi sezione sotto — `modello_invito_candidatura.md` |
 
 ---
 
@@ -49,6 +56,11 @@ LINK E RICERCA INQUILINO/
 3. Attivare GitHub Pages: Settings → Pages → Branch: main → / (root)
 4. URL finale: `https://andreatosato-2026.github.io/tosato-montegrappa-inquilino/`
 5. URL Google Form (già inserito): `https://docs.google.com/forms/d/e/1FAIpQLSdWt7IFD7vps8gHezomrtCVSZVl12K0x0GWBJ4NRs_9JZxp_A/viewform?usp=header`
+
+### ⚠️ Nota mappa Google Maps
+
+Il parametro `q=` nell'iframe deve essere **`Via+Salita+Monte+Grappa+5,+Verona+VR,+Italia`** (con "Salita").
+Usare solo `Via+Monte+Grappa+5` porta Google Maps a geolocalizzare una via omonima a Villafranca di Verona.
 
 ### Foto
 
@@ -82,8 +94,9 @@ for f in foto-*.jpg; do mogrify -auto-orient "$f"; done
 - Note aggiuntive (Paragrafo, opzionale)
 
 **Sezione 2 — Upload documenti**
-- Ultime 3 buste paga (File upload, max 3 file, PDF o JPEG, max 10MB cad., obbligatorio)
-- Copia contratto di lavoro (File upload, max 1 file, PDF, obbligatorio)
+- Ultime 3 buste paga (File upload, max 3 file, PDF o JPEG, max 10MB cad., **facoltativo**)
+- Copia contratto di lavoro (File upload, max 1 file, PDF, **facoltativo**)
+- *Nota: i campi sono stati resi facoltativi. La sezione 3 contiene un avviso: senza documenti non è possibile completare l'analisi.*
 
 **Sezione 3 — Conferma**
 - Messaggio di conferma personalizzato (vedi testo sotto)
@@ -181,12 +194,51 @@ Da sviluppare nella prossima sessione.
 
 ---
 
+## Prefisso universale — Email e Agenda
+
+**⚠️ REGOLA OBBLIGATORIA:** Tutte le email e tutti gli eventi in agenda relativi a questo progetto devono avere il prefisso:
+
+```
+MONTE GRAPPA | 
+```
+
+### Email
+
+Oggetto di ogni email in uscita (automatiche da Apps Script e manuali):
+```
+MONTE GRAPPA | [oggetto specifico]
+```
+
+Esempi:
+- `MONTE GRAPPA | Candidatura ricevuta — Via Salita Monte Grappa 5, Verona`
+- `MONTE GRAPPA | Informativa privacy — trattamento dati candidatura locazione`
+- `MONTE GRAPPA | Via Salita Monte Grappa 5, Verona — Candidatura selezionata`
+- `MONTE GRAPPA | Via Salita Monte Grappa 5, Verona — Integrazione documentazione`
+- `MONTE GRAPPA | Via Salita Monte Grappa 5, Verona — Esito candidatura`
+- `MONTE GRAPPA | Via Salita Monte Grappa 5, Verona — Informazioni per la candidatura`
+
+### Agenda
+
+Titolo di ogni evento in calendario (attività, promemoria, eventi fatti):
+```
+MONTE GRAPPA | [titolo specifico]
+```
+
+Esempi:
+- `MONTE GRAPPA | Inviata email invito candidatura a [Nome] - - fatto`
+- `MONTE GRAPPA | Verificare risposta [Nome]`
+- `MONTE GRAPPA | Candidatura ricevuta [Nome] - - fatto`
+- `MONTE GRAPPA | Analisi candidature`
+- `MONTE GRAPPA | Visita immobile [Nome]`
+
+---
+
 ## MODULO 6 — Template email risposta (3 tipi)
 
 ### Tipo A — Esito positivo (invito a visita)
 
 ```
-Oggetto: Via Monte Grappa 5, Verona — Candidatura selezionata
+Oggetto: MONTE GRAPPA | Via Monte Grappa 5, Verona — Candidatura selezionata
 
 Buongiorno [Nome],
 
@@ -204,29 +256,64 @@ TOSATO Intermediazioni S.r.l.
 
 ### Tipo B — Richiesta integrazione documenti
 
+**Variante B1 — Lavoratore dipendente** (buste paga + contratto)
+
 ```
-Oggetto: Via Monte Grappa 5, Verona — Integrazione documentazione
+Oggetto: MONTE GRAPPA | Via Monte Grappa 5, Verona — Integrazione documentazione
 
 Buongiorno [Nome],
 
-abbiamo ricevuto la sua candidatura. Per completare la valutazione, 
-le chiediamo di integrare la documentazione con:
+la ringraziamo per aver inviato la sua candidatura per l'immobile di Via Monte Grappa 5, Verona.
 
-- [SPECIFICARE DOCUMENTO MANCANTE]
+Nel verificare i documenti caricati, abbiamo riscontrato che la documentazione risulta incompleta
+o che alcuni file non sono leggibili. In particolare:
 
-Può inviarci i file rispondendo a questa email oppure tramite [LINK FORM].
+- [es. buste paga: ne sono pervenute solo 2 su 3 richieste]
+- [es. contratto di lavoro: il file caricato non è leggibile]
+
+La preghiamo di caricare nuovamente i documenti indicati rispondendo a questa email, oppure
+tramite il seguente link:
+https://docs.google.com/forms/d/e/1FAIpQLSdWt7IFD7vps8gHezomrtCVSZVl12K0x0GWBJ4NRs_9JZxp_A/viewform
 
 La ringraziamo per la collaborazione.
 
 Distinti saluti,
 Andrea Tosato
 TOSATO Intermediazioni S.r.l.
+andrea.tosato@tosatointermediazioni.com
+```
+
+**Variante B2 — Lavoratore autonomo / libero professionista** (CU o dichiarazione dei redditi)
+
+```
+Oggetto: MONTE GRAPPA | Via Monte Grappa 5, Verona — Integrazione documentazione
+
+Buongiorno [Nome],
+
+la ringraziamo per aver inviato la sua candidatura per l'immobile di Via Monte Grappa 5, Verona.
+
+Per i lavoratori autonomi e i liberi professionisti, in luogo delle buste paga e del contratto
+di lavoro dipendente, è necessario allegare:
+
+- le ultime 2 Certificazioni Uniche (CU), oppure
+- le ultime 2 dichiarazioni dei redditi (modello 730 o modello Redditi)
+
+La preghiamo di inviarci la documentazione rispondendo a questa email, oppure tramite
+il seguente link:
+https://docs.google.com/forms/d/e/1FAIpQLSdWt7IFD7vps8gHezomrtCVSZVl12K0x0GWBJ4NRs_9JZxp_A/viewform
+
+La ringraziamo per la collaborazione.
+
+Distinti saluti,
+Andrea Tosato
+TOSATO Intermediazioni S.r.l.
+andrea.tosato@tosatointermediazioni.com
 ```
 
 ### Tipo C — Esito negativo
 
 ```
-Oggetto: Via Monte Grappa 5, Verona — Esito candidatura
+Oggetto: MONTE GRAPPA | Via Monte Grappa 5, Verona — Esito candidatura
 
 Buongiorno [Nome],
 
@@ -244,6 +331,100 @@ TOSATO Intermediazioni S.r.l.
 
 ---
 
+---
+
+## MODULO 7 — Procedura CHECK MONTE GRAPPA
+
+**Trigger:** `Check Monte Grappa`
+
+**Scopo:** verificare se sono arrivate richieste da portali immobiliari, analizzare il profilo del richiedente e decidere se inviare l'email di invito alla candidatura.
+
+**Riferimento annuncio sui portali:** `53mq-AT1131`
+
+---
+
+### Step 1 — Cerca email (oggi + ieri)
+
+Cercare nelle ultime 48h in entrambi gli account Gmail:
+
+| Account | Tool | Termini di ricerca |
+|---------|------|--------------------|
+| Gmail aziendale | `mcp__gmail-lavoro__search_emails` | `53mq-AT1131 OR "Monte Grappa" OR AT1131` — escludi mittente andrea.tosato@tosatointermediazioni.com |
+| Gmail personale | `mcp__gmail__search_emails` | stessa query (BCC notifiche automatiche) |
+
+Per ogni email trovata, estrarre: mittente (nome + email), numero di telefono (se presente nel testo), testo integrale della richiesta, data/ora.
+
+---
+
+### Step 2 — Presentare le email trovate
+
+Per ogni email trovare e mostrare:
+- Mittente: nome + email
+- Data/ora ricezione
+- Testo della richiesta (sintesi)
+- Telefono (se presente)
+
+---
+
+### Step 3 — Analisi richiedente
+
+Per ciascun richiedente eseguire in sequenza:
+
+**3a — Nome italiano o straniero**
+Analisi testuale del nome e cognome: indicare se il nome è presumibilmente italiano, europeo, extraeuropeo o non determinabile.
+
+**3b — WebSearch del nome** (solo se nome+cognome entrambi presenti)
+```
+WebSearch: "[Nome] [Cognome]" site:linkedin.com OR site:facebook.com OR site:paginebianche.it
+```
+Riportare i primi 2-3 risultati significativi (chi è, dove lavora, se corrisponde ai dati dichiarati).
+
+**3c — WebSearch del numero di telefono** (solo se presente)
+```
+WebSearch: "[numero telefono]"
+```
+Segnalare se il numero risulta associato a nomi, attività, segnalazioni truffe o spam.
+
+**3d — WebSearch dell'indirizzo email**
+```
+WebSearch: "[email richiedente]"
+```
+Segnalare se l'email risulta associata a profili social, siti, attività o segnalazioni anomale.
+
+---
+
+### Step 4 — Proposta invio email
+
+Dopo l'analisi, chiedere:
+> "Invio l'email di invito candidatura a [Nome / email]?"
+
+Se sì → usare `modello_invito_candidatura.md` e inviare da Gmail aziendale (`mcp__gmail-lavoro__send_email`).
+
+---
+
+### Step 5 — Post invio
+
+Dopo l'invio:
+1. Creare evento agenda oggi: `MONTE GRAPPA | Inviata email invito candidatura a [Nome] - - fatto` (colorId 10, 15 min, nessun promemoria)
+2. Creare promemoria a +4 giorni lavorativi: `MONTE GRAPPA | Verificare risposta [Nome]` (colorId 10, 15 min, nessun promemoria)
+3. **Applicare etichetta `Processato con AI` (Label_16)** a TUTTE le email gestite in questo check (sia quelle per cui si invia l'invito, sia quelle scartate), tramite `mcp__gmail-lavoro__modify_email` con `addLabelIds: ["Label_16"]`. Questo evita che vengano riprocessate nel prossimo Check Monte Grappa.
+
+> **Nota:** applicare l'etichetta solo alle email dei portali (Idealista, Immobiliare.it), non alle email di sistema (conferme automatiche da andrea.tosato1@gmail.com, UNIPOL, ecc.).
+
+---
+
+### Step 1 — Filtro email già processate
+
+**Prima di presentare le email al Step 2**, escludere automaticamente quelle che hanno già l'etichetta `Processato con AI` — sono state gestite in un check precedente. Aggiungere `-label:processato-con-ai` alla query di ricerca Gmail.
+
+---
+
+### Se non ci sono email
+
+Rispondere: "Nessuna email con riferimento 53mq-AT1131 / Monte Grappa nelle ultime 48h."
+
+---
+
 ## Dati immobile (riferimento)
 
 | Campo | Valore |
@@ -254,8 +435,8 @@ TOSATO Intermediazioni S.r.l.
 | Superficie | 53 mq |
 | Livelli | 3 (PT: soggiorno + angolo cottura; P1: bagno; P2: camera matrimoniale) |
 | Contratto | 4+4 anni uso abitativo |
-| Canone anni 1-4 | € 1.000/mese |
-| Canone anni 5-8 | € 1.200/mese |
+| Canone anni 1-4 | € 900/mese |
+| Canone anni 5-8 | € 1.100/mese |
 | Spese condominiali | Nessuna |
 | Assicurazione | € 80/anno (conduttore) |
 | Manutenzione caldaia | € 120/anno (conduttore) |
