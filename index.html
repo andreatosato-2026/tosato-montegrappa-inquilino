@@ -87,18 +87,6 @@
       margin-top: 4px;
     }
 
-    /* SCADENZA BANNER */
-    .scadenza-bar {
-      background: var(--legno);
-      color: white;
-      text-align: center;
-      padding: 14px 24px;
-      font-family: 'Arial', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-    }
-    .scadenza-bar strong { font-weight: bold; }
-
     /* CONTENUTO */
     .container {
       max-width: 860px;
@@ -324,113 +312,6 @@
     .onere-val.verde { color: var(--verde-ok); }
     .onere-val.conduttore { color: var(--legno); }
 
-    /* PROCESSO */
-    .steps {
-      margin-top: 32px;
-      counter-reset: step;
-    }
-    .step {
-      display: flex;
-      gap: 24px;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--grigio-chiaro);
-      align-items: flex-start;
-    }
-    .step:last-child { border-bottom: none; }
-    .step-num {
-      counter-increment: step;
-      font-family: 'Arial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--legno);
-      min-width: 36px;
-      padding-top: 2px;
-    }
-    .step-content h3 {
-      font-size: 16px;
-      font-weight: normal;
-      margin-bottom: 6px;
-    }
-    .step-content p {
-      font-family: 'Arial', sans-serif;
-      font-size: 13px;
-      color: var(--grigio);
-      margin: 0;
-    }
-    .step-data {
-      font-family: 'Arial', sans-serif;
-      font-size: 11px;
-      color: var(--legno);
-      font-weight: bold;
-      margin-top: 4px;
-    }
-
-    /* RICHIESTA DOCUMENTI */
-    .docs-lista {
-      margin-top: 24px;
-    }
-    .doc-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--grigio-chiaro);
-      font-family: 'Arial', sans-serif;
-      font-size: 14px;
-    }
-    .doc-item:last-child { border-bottom: none; }
-    .doc-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--grigio-chiaro);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-    .doc-testo strong { display: block; margin-bottom: 2px; }
-    .doc-testo span { color: var(--grigio); font-size: 12px; }
-
-    /* CTA */
-    .cta-section {
-      background: var(--nero);
-      color: var(--bianco);
-      padding: 80px 24px;
-      text-align: center;
-    }
-    .cta-section h2 {
-      color: var(--bianco);
-      margin-bottom: 12px;
-    }
-    .cta-section p {
-      color: #aaa;
-      max-width: 500px;
-      margin: 0 auto 36px;
-      font-family: 'Arial', sans-serif;
-      font-size: 14px;
-    }
-    .btn-candidati {
-      display: inline-block;
-      background: var(--legno);
-      color: white;
-      text-decoration: none;
-      padding: 18px 48px;
-      font-family: 'Arial', sans-serif;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: background 0.2s;
-    }
-    .btn-candidati:hover { background: #a07040; }
-    .cta-nota {
-      margin-top: 20px;
-      font-family: 'Arial', sans-serif;
-      font-size: 12px;
-      color: #555;
-    }
-
     /* IMPEGNI CONTRATTUALI */
     .contratto-info {
       background: #f4f0ea;
@@ -458,7 +339,6 @@
       .hero-stats { gap: 24px; }
       .canoni { grid-template-columns: 1fr; }
       .livelli { grid-template-columns: 1fr; }
-      .step { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
@@ -493,12 +373,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- SCADENZA -->
-<div class="scadenza-bar">
-  La proprietà comunicherà la propria decisione entro il <strong>20 giugno 2026</strong>.
-  Candidature aperte. Decorrenza contratto: 1 luglio 2026.
 </div>
 
 <!-- GALLERY -->
@@ -741,187 +615,13 @@
 
     <div class="contratto-info">
       <p>Contratto uso abitativo 4+4 anni ai sensi della L. 431/1998. Durata minima garantita di 4 anni con diritto al rinnovo per ulteriori 4. Il contratto sarà registrato regolarmente.</p>
-      <p>In fase di visita saranno illustrati tutti i dettagli contrattuali e le clausole accessorie. Non verrà richiesto alcun impegno prima della visita.</p>
     </div>
   </div>
 </section>
-
-<!-- DOCUMENTI RICHIESTI -->
-<section>
-  <div class="container">
-    <div class="section-label">Documentazione richiesta</div>
-    <h2>Cosa serve per candidarsi</h2>
-    <p>
-      Per consentire una valutazione seria della candidatura, chiediamo di allegare
-      i documenti indicati al momento della compilazione del form.
-      File accettati: PDF o immagine JPEG/PNG. Non apriremo file di tipo diverso.
-    </p>
-    <p><u>Senza questi documenti non sarà valutata la candidatura.</u></p>
-
-    <div class="docs-lista">
-      <div class="doc-item">
-        <div class="doc-icon">01</div>
-        <div class="doc-testo">
-          <strong>Dati anagrafici e lavorativi</strong>
-          <span>Compilati direttamente nel form: nome, attività, datore di lavoro, tipo e durata del contratto.</span>
-        </div>
-      </div>
-      <div class="doc-item">
-        <div class="doc-icon">02</div>
-        <div class="doc-testo">
-          <strong>Ultime 3 buste paga</strong>
-          <span>Formato PDF o foto JPEG leggibile. I tre mesi più recenti disponibili.</span>
-        </div>
-      </div>
-      <div class="doc-item">
-        <div class="doc-icon">03</div>
-        <div class="doc-testo">
-          <strong>Copia contratto di lavoro</strong>
-          <span>O documentazione equivalente per lavoratori autonomi / liberi professionisti.</span>
-        </div>
-      </div>
-    </div>
-
-    <p style="margin-top:24px; font-family:Arial,sans-serif; font-size:13px; color:#888;">
-      I dati raccolti sono trattati ai soli fini della selezione del conduttore e non
-      vengono condivisi con terze parti. Tutti i file vengono analizzati in ambiente
-      sicuro e rimossi entro 60 giorni dalla chiusura della selezione.
-    </p>
-  </div>
-</section>
-
-<!-- PROCESSO -->
-<section>
-  <div class="container">
-    <div class="section-label">Come funziona</div>
-    <h2>Il processo di selezione</h2>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-content">
-          <h3>Invio candidatura</h3>
-          <p>Compili il form qui sotto con i dati richiesti e allega i documenti. Riceverai una conferma via email entro pochi minuti.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-content">
-          <h3>Pre-analisi documentale</h3>
-          <p>Verifica dei documenti inviati entro 5 giorni lavorativi. In caso di documentazione incompleta, sarà richiesta integrazione via email.</p>
-          <div class="step-data">Entro 5 giorni lavorativi dall'invio</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-content">
-          <h3>Ricontatto candidati selezionati</h3>
-          <p>Chi supera la pre-analisi sarà ricontattato per essere invitato alla visita. Le candidature incomplete non riceveranno risposta in questa fase.</p>
-          <div class="step-data">Intorno al 10 giugno 2026</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <div class="step-content">
-          <h3>Visita all'immobile</h3>
-          <p>Incontro presso l'immobile. In questa sede saranno illustrati i dettagli contrattuali, le condizioni del deposito cauzionale e le modalità di firma.</p>
-          <div class="step-data">Indicativamente tra il 10 e il 20 giugno 2026</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">05</div>
-        <div class="step-content">
-          <h3>Decisione della proprietà</h3>
-          <p>Tutti i candidati incontrati riceveranno comunicazione dell'esito, positivo o negativo. Il contratto decorrerà dal <strong>1 luglio 2026</strong>.</p>
-          <div class="step-data">Entro il 20 giugno 2026</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INFORMATIVA PRIVACY -->
-<section id="privacy" style="background:#f4f0ea; border-bottom:none;">
-  <div class="container">
-    <div class="section-label">Informativa privacy</div>
-    <h2 style="font-size:20px;">Trattamento dei dati personali</h2>
-    <p style="font-family:Arial,sans-serif; font-size:13px; color:#444;">
-      Ai sensi dell'art. 13 del Regolamento UE 2016/679 (GDPR), La informiamo che i dati personali
-      forniti tramite il presente form — inclusi i documenti di natura reddituale e lavorativa
-      caricati volontariamente — saranno trattati esclusivamente per finalità di selezione del
-      conduttore per l'immobile di Via Monte Grappa 5, Verona.
-    </p>
-
-    <details style="margin-top:16px;">
-      <summary style="font-family:Arial,sans-serif; font-size:13px; font-weight:bold; cursor:pointer; color:var(--legno);">
-        Leggi l'informativa completa
-      </summary>
-      <div style="margin-top:16px; font-family:Arial,sans-serif; font-size:13px; color:#444; line-height:1.7;">
-        <p><strong>Titolare del trattamento:</strong> Andrea Tosato, c/o TOSATO Intermediazioni S.r.l.,
-        Via Belle Arti 9, 37053 Cerea (VR) — andrea.tosato@tosatointermediazioni.com</p>
-
-        <p><strong>Finalità e base giuridica:</strong> I dati sono raccolti e trattati ai soli fini
-        della selezione del conduttore (art. 6, par. 1, lett. b GDPR — esecuzione di misure
-        precontrattuali su richiesta dell'interessato). Il caricamento dei documenti avviene
-        su base volontaria e con il consenso esplicito dell'interessato (art. 6, par. 1, lett. a GDPR).</p>
-
-        <p><strong>Dati trattati:</strong> dati anagrafici, contatti, dati lavorativi e reddituali,
-        documenti caricati (buste paga, contratto di lavoro).</p>
-
-        <p><strong>Modalità di trattamento:</strong> I dati sono trattati in forma elettronica,
-        con misure di sicurezza adeguate. I documenti caricati sono conservati su Google Drive
-        con accesso limitato al titolare. Non sono condivisi con terze parti né trasferiti
-        al di fuori dell'Unione Europea.</p>
-
-        <p><strong>Conservazione:</strong> I dati e i documenti saranno eliminati entro
-        60 giorni dalla chiusura della procedura di selezione (20 agosto 2026).</p>
-
-        <p><strong>Diritti dell'interessato:</strong> Lei ha il diritto di accedere ai propri dati,
-        richiederne la rettifica o la cancellazione, opporsi al trattamento, richiedere la
-        limitazione del trattamento e la portabilità dei dati. Per esercitare tali diritti o
-        per revocare il consenso, scriva a: andrea.tosato@tosatointermediazioni.com</p>
-
-        <p><strong>Reclami:</strong> Ha il diritto di proporre reclamo al Garante per la
-        protezione dei dati personali (www.garanteprivacy.it).</p>
-      </div>
-    </details>
-  </div>
-</section>
-
-<!-- CTA -->
-<div class="cta-section">
-  <div class="container">
-    <h2>Invia la tua candidatura</h2>
-    <p>Il form richiede circa 5 minuti.<br>Tieni pronti i file delle buste paga e del contratto di lavoro prima di iniziare.<br>Al termine della compilazione riceverà una email di conferma invio all'indirizzo email indicato.</p>
-
-    <div style="max-width:520px; margin:0 auto 28px; text-align:left;">
-      <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer; font-family:Arial,sans-serif; font-size:13px; color:#ccc; line-height:1.5;">
-        <input type="checkbox" id="privacy-check" style="margin-top:3px; flex-shrink:0; width:16px; height:16px; cursor:pointer; accent-color:var(--legno);">
-        <span>
-          Ho letto e accetto l'<a href="#privacy" style="color:var(--legno-chiaro);">informativa sul trattamento dei dati personali</a>
-          e acconsento al caricamento e all'analisi dei documenti forniti ai soli fini
-          della selezione del conduttore.
-        </span>
-      </label>
-    </div>
-
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdWt7IFD7vps8gHezomrtCVSZVl12K0x0GWBJ4NRs_9JZxp_A/viewform?usp=header" class="btn-candidati" id="btn-form"
-       target="_blank" rel="noopener">Candidati ora</a>
-
-    <p class="cta-nota">
-      Dopo l'invio riceverai una conferma automatica e una copia dell'informativa privacy via email.<br>
-      Per informazioni: <a href="mailto:andrea.tosato@tosatointermediazioni.com" style="color:inherit">andrea.tosato@tosatointermediazioni.com</a> · <a href="tel:+393395980786" style="color:inherit">339 598 0786</a>
-    </p>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
   Via Monte Grappa 5, Verona &middot; Zona Borgo Trento
-  &nbsp;&middot;&nbsp;
-  Locazione a cura di TOSATO Intermediazioni S.r.l.
-  &nbsp;&middot;&nbsp;
-  Selezione aperta fino al 20 giugno 2026
 </footer>
 
 <!-- LIGHTBOX SCRIPT -->
@@ -994,23 +694,6 @@
 
   document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === this) closeLightbox();
-  });
-
-  // Privacy checkbox → abilita/disabilita bottone
-  var privacyCheck = document.getElementById('privacy-check');
-  var btnForm = document.getElementById('btn-form');
-  privacyCheck.addEventListener('change', function() {
-    if (this.checked) {
-      btnForm.style.opacity = '1';
-      btnForm.style.pointerEvents = 'auto';
-      btnForm.style.cursor = 'pointer';
-      btnForm.removeAttribute('aria-disabled');
-    } else {
-      btnForm.style.opacity = '0.35';
-      btnForm.style.pointerEvents = 'none';
-      btnForm.style.cursor = 'default';
-      btnForm.setAttribute('aria-disabled', 'true');
-    }
   });
 
   document.addEventListener('keydown', function(e) {
