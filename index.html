@@ -292,16 +292,7 @@
       margin-top: 6px;
     }
     .canone-box.primo .canone-nota { color: #888; }
-    .canone-box.spese { background: #e3d3bd; color: var(--nero); }
-    .canone-box.spese .canone-periodo { color: #6b5536; }
-    .spese-voce {
-      font-family: 'Arial', sans-serif;
-      font-size: 15px;
-      color: var(--nero);
-      margin-top: 10px;
-      line-height: 1.4;
-    }
-    .canone-box.spese .spese-voce strong { font-size: 19px; letter-spacing: -0.5px; }
+    mark.stima { background: #f3e6cf; color: #6b5536; padding: 0 5px; border-radius: 3px; font-weight: bold; }
 
     .oneri-lista {
       margin-top: 28px;
@@ -564,11 +555,6 @@
         <div class="canone-importo">€ 740</div>
         <div class="canone-nota">al mese · canone bloccato</div>
       </div>
-      <div class="canone-box spese">
-        <div class="canone-periodo">Spese aggiuntive prevedibili</div>
-        <div class="spese-voce"><strong>€ 140</strong> / mese (stima) &middot; utenze: acqua, luce, gas</div>
-        <div class="spese-voce"><strong>€ 120</strong> / anno &middot; controllo caldaia</div>
-      </div>
     </div>
 
     <div class="oneri-lista">
@@ -603,6 +589,10 @@
       <div class="onere-row">
         <span class="onere-voce">Utenze (luce, gas, acqua, rifiuti)</span>
         <span class="onere-val conduttore">Conduttore</span>
+      </div>
+      <div class="onere-row">
+        <span class="onere-voce">Utenze (acqua, luce, gas)</span>
+        <span class="onere-val conduttore">€ 140 / mese (<mark class="stima">stima</mark>)</span>
       </div>
       <div class="onere-row">
         <span class="onere-voce">Fumo</span>
